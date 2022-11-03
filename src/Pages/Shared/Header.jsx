@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
-        <>
+        <header className='max-w-[1440px] mx-auto'>
             <div className="navbar bg-base-100 py-12">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -26,7 +26,8 @@ const Header = () => {
                         <li><Link to='/'>About</Link></li> 
                         <li><Link to='/'>Services</Link></li> 
                         <li><Link to='/'>Blog</Link></li> 
-                        <li><Link to='/'>Contact</Link></li> 
+                        <li><Link to='../login'>Contact</Link></li> 
+                        <li><Link to='login'>Login</Link></li> 
                     </ul>
                 </div>
                 <div className="navbar-end">
@@ -41,7 +42,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </header>
     );
 };
 
