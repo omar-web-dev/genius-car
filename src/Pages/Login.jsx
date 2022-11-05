@@ -4,18 +4,32 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthProvider';
 
 const Login = () => {
-    const {createUserEmailPassword, user, error, setError} = useContext(AuthContext)
-    
+    const {singInEmailPassword, user, error, setError} = useContext(AuthContext)
     const handelUserLogin = e => {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
         
-        createUserEmailPassword(email, password)
-        .then((userCredential) => {
+        singInEmailPassword(email, password)
+        .then((currentUser) => {
             // Signed in 
-            const users = userCredential.user;
-            console.log(users)
+            setError('')
+            const users = currentUser.user.email;
+
+            fetch('http://localhost:5000/jwt', {
+                method : 'POST',
+                headers : {
+                    'content-type' : 'application/json'
+                },
+                body : JSON.stringify(users)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                localStorage.setItem('token' , data.token)
+            })
+
+
           })
           .catch((error) => {
             const errorCode = error.code;

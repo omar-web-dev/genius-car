@@ -1,14 +1,14 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Header from '../Pages/Shared/Header';
+// import React from 'react';
+// import { Outlet } from 'react-router-dom';
+// import Header from '../Pages/Shared/Header';
 
-const Layout2 = () => {
-    return (
-        <div>
-            <Header/>
-            <Outlet/>
-        </div>
-    );
-};
+// const Layout2 = () => {
+//     return (
+//         <div>
+//             <Header/>
+//             <Outlet/>
+//         </div>
+//     );
+// };
 
-export default Layout2;
+// export default Layout2;

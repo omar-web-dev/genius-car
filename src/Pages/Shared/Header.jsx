@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { HiOutlineSearch, HiOutlineShoppingBag } from "react-icons/hi";
 import { Link } from 'react-router-dom';
-// import img1 '../../../resosses/icons/logo.svg'
+import { AuthContext } from '../../Context/AuthProvider.js';
+import Orders from '../Orders/Orders.jsx';
+
 
 const Header = () => {
+    const { user, logOut, error, setError, status, setStatus } = useContext(AuthContext)
+    const handelUserLogOut = () => {
+        console.log('amak log out kore dibe?');
+        logOut()
+            .then(() => {
+                setStatus("Sign-out successful.")
+                setError('')
+            }).catch((error) => {
+                setError(error.code)
+            });
+    }
     return (
         <header className='max-w-[1440px] mx-auto'>
             <div className="navbar bg-base-100 py-12">
@@ -22,12 +35,29 @@ const Header = () => {
                 </div>
                 <div className="navbar-center hidden lg:flex ">
                     <ul className="menu menu-horizontal p-0">
-                        <li><Link to='/'>Home</Link></li> 
-                        <li><Link to='/'>About</Link></li> 
-                        <li><Link to='/'>Services</Link></li> 
-                        <li><Link to='/'>Blog</Link></li> 
-                        <li><Link to='../login'>Contact</Link></li> 
-                        <li><Link to='login'>Login</Link></li> 
+                        <li><Link to='/'>Home</Link></li>
+                        <li><Link to='/'>About</Link></li>
+                        <li><Link to='/'>Services</Link></li>
+                        <li><Link to='/'>Blog</Link></li>
+                        <li><Link to='/'>Contact</Link></li>
+                        {!user ?
+                            <>
+                                <li><Link to='login'>Login</Link></li>
+                                <li><Link to='sing-up'>Sing up</Link></li>
+                            </>
+                            :
+                            <li>
+                                {/* {user.displayName &&
+                                    <h2>User : {user.displayName}</h2>
+                                } */}
+                                {user.email &&
+                                    <>
+                                        <button onClick={handelUserLogOut}>{user.email}</button>
+                                        <Link to='orders'>Order</Link>
+                                    </>
+                                }
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div className="navbar-end">
@@ -36,7 +66,7 @@ const Header = () => {
                             <HiOutlineShoppingBag className='w-6 h-6' />
                         </div>
                         <div>
-                            <HiOutlineSearch className='w-6 h-6'/>
+                            <HiOutlineSearch className='w-6 h-6' />
                         </div>
                         <button className="btn btn-outline btn-error">Appointment</button>
                     </div>

@@ -7,15 +7,15 @@ const Login = () => {
     const {createUserEmailPassword, user, } = useContext(AuthContext)
     const [error, setError] = useState('')
     
-    const handelUserLogin = e => {
+    const handelUserRegistration = e => {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
         
         createUserEmailPassword(email, password)
-        .then((userCredential) => {
+        .then((currentUser) => {
             // Signed in 
-            const users = userCredential.user;
+            const users = currentUser.user;
             console.log(users)
           })
           .catch((error) => {
@@ -32,16 +32,22 @@ const Login = () => {
                     <div className='md:flex hidden justify-end '>
                         <img className='px-10 h-full' src="https://i.ibb.co/9N5gPRD/login1.png" alt="logo" />
                     </div>
-                    <form onSubmit={handelUserLogin} className=' md:w-1/2'>
+                    <form onSubmit={handelUserRegistration} className=' md:w-1/2'>
                         <div className='border p-5 w-[611px]'>
                             <div className="text-center lg:text-left">
-                                {/* {errorMessage && 
+                                {error && 
                                     <p className='text-red-500'>{error}</p>
-                                } */}
-                                <h1 className="text-4xl text-center font-semi-bold ">Login</h1>
+                                }
+                                <h1 className="text-4xl text-center font-semi-bold ">Resignation</h1>
                             </div>
                             <div className="card flex-shrink-0 ">
                                 <div className="card-body">
+                                    <div className="form-control">
+                                        <label className="label">
+                                            <span className="label-text">Name</span>
+                                        </label>
+                                        <input type="text" name='name' placeholder="name" className="input input-bordered" />
+                                    </div>
                                     <div className="form-control">
                                         <label className="label">
                                             <span className="label-text">Email</span>
