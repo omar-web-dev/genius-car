@@ -6,6 +6,7 @@ import Home from "../Pages/Home/Home";
 import Orders from "../Pages/Orders/Orders";
 import Login from "../Pages/Login";
 import SingUp from "../Pages/SingUp";
+import PrivetRoute from "./PrivetRoute";
 
 export const router = createBrowserRouter([
     {
@@ -30,7 +31,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'service/:id',
-                element : <CheckOut/>,
+                // element : <CheckOut/>,
+                element : <PrivetRoute><CheckOut/></PrivetRoute>,
                 loader :({params}) => fetch(`http://localhost:5000/service/${params.id}`)
             },
             {

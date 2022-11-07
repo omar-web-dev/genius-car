@@ -1,8 +1,8 @@
 import React from 'react';
 import { FaRegTimesCircle } from 'react-icons/fa';
 
-const ReviewList = ({ order, handelDelete }) => {
-    const { serviceName, product_photo, _id, price, email, customer } = order
+const ReviewList = ({ order, handelDelete, handelStatusUpdate }) => {
+    const {status, serviceName, product_photo, _id, price, email, customer } = order
    
     return (
         <div className="p-4 my-5 rounded-lg border shadow-md sm:p-8 ">
@@ -19,13 +19,13 @@ const ReviewList = ({ order, handelDelete }) => {
                     </div>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                    $2367
+                    ${price}
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900">
                     22-10-2022
                 </div>
                 <div className='inline-flex items-center'>
-                    <button className="text-xl font-semibold text-gray-100 bg-red-500 px-5 py-3 rounded-lg">padding</button>
+                    <button onClick={() => handelStatusUpdate(_id)} className="text-xl font-semibold text-gray-100 bg-red-500 px-5 py-3 rounded-lg">{status? status : 'padding'}</button>
                 </div>
             </div>
         </div>

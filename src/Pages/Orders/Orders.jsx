@@ -18,16 +18,38 @@ const Orders = () => {
         const confirm = window.confirm('Are you sure delete this item')
         if (confirm) {
             fetch(`http://localhost:5000/order/${id}`, {
-                method : 'DELETE',
+                method: 'DELETE',
             })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    if (data?.deletedCount > 0) {
+                        const reaming = orders.filter(odr => odr._id !== id)
+                        setOrders(reaming)
+                    }
+                })
+        }
+    }
+
+    const handelStatusUpdate = id => {
+        fetch(`http://localhost:5000/orders/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ status: "Approved" })
+        })
             .then(res => res.json())
             .then(data => {
-                if(data?.deletedCount > 0){
-                    const reaming =  orders.filter(odr => odr._id === !id)
-                    setOrders(reaming)
+                console.log(data)
+                if(data.modifiedCount > 0){
+                    const reaming = orders.filter(odr => odr._id !== id)
+                    const approved = orders.find(odr => odr._id === id)
+                    approved.status = 'Approved'
+                    const newOrders = [...reaming, approved]
+                    setOrders(newOrders)
                 }
             })
-        }
     }
 
     // if (user?.email) {
@@ -51,7 +73,14 @@ const Orders = () => {
                             </div>
                         </div>
                         <div>
-                            {orders.map(order => <ReviewList handelDelete={handelDelete} key={order?._id} order={order} orders={orders} />)}
+                            {orders.map(order => <ReviewList
+                                order={order}
+                                orders={orders}
+                                key={order?._id}
+                                handelDelete={handelDelete}
+                                handelStatusUpdate={handelStatusUpdate}
+
+                            />)}
                         </div >
                         <div className='flex justify-between'>
                             <button className="flex items-center border-indigo-300 border p-3 rounded-md">
@@ -71,3 +100,4 @@ const Orders = () => {
 };
 
 export default Orders;
+

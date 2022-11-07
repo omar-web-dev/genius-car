@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthProvider';
 
 const Login = () => {
-    const {createUserEmailPassword, user, } = useContext(AuthContext)
+    const {createUserEmailPassword } = useContext(AuthContext)
     const [error, setError] = useState('')
     
     const handelUserRegistration = e => {

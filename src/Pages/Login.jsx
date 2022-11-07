@@ -1,41 +1,43 @@
 import React, { useContext } from 'react';
 import { FaFacebookF, FaGofore, FaLinkedinIn } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthProvider';
 
 const Login = () => {
-    const {singInEmailPassword, user, error, setError} = useContext(AuthContext)
+    const location = useLocation()
+    const navigate = useNavigate()
+    const { singInEmailPassword, user, error, setError } = useContext(AuthContext)
+    const form = location?.state?.from?.pathname || '/';
     const handelUserLogin = e => {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
-        
+
         singInEmailPassword(email, password)
-        .then((currentUser) => {
-            // Signed in 
-            setError('')
-            const users = currentUser.user.email;
+            .then((currentUser) => {
+                // Signed in 
+                const users = currentUser.user.email;
 
+                setError('')
             fetch('http://localhost:5000/jwt', {
-                method : 'POST',
-                headers : {
-                    'content-type' : 'application/json'
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
                 },
-                body : JSON.stringify(users)
+                body: JSON.stringify(users)
             })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                localStorage.setItem('token' , data.token)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    localStorage.setItem('token', data.token)
+                    navigate(form, { replace: true })
+                })
             })
-
-
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            setError(errorMessage)
-          });
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setError(errorMessage)
+            });
     }
     return (
         <div className='max-w-[1440px] mx-auto'>
@@ -48,7 +50,7 @@ const Login = () => {
                         <div className='border p-5 w-[611px]'>
                             <div className="text-center lg:text-left">
                                 <h1 className="text-4xl text-center font-semi-bold ">Login</h1>
-                                {error && 
+                                {error &&
                                     <p className='text-red-500 text-center '>{error}</p>
                                 }
                             </div>

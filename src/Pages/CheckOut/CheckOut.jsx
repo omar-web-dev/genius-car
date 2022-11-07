@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthProvider';
 
 const CheckOut = () => {
     const data = useLoaderData()
+    const user = useContext(AuthContext)
+    // const {user} = useContext(AudioContext)
+    console.log(user)
     
     const handelOrderProduct = e => {
         e.preventDefault()
@@ -11,7 +15,7 @@ const CheckOut = () => {
         const email = e.target.email.value
         const phone = e.target.phone.value
         const massage = e.target.massage.value
-        const fullName = firstName+ ' ' + lastName;
+        const fullName = firstName + ' ' + lastName;
 
         const order = {
             service :data?._id,
@@ -19,7 +23,7 @@ const CheckOut = () => {
             product_photo : data?.img,
             price : data?.price,
             customer: fullName,
-            email,
+            email :'email@ggg.ccc',
             phone,
             massage
         }
@@ -33,9 +37,9 @@ const CheckOut = () => {
          .then(data => {
             if(data.acknowledged) {
                 alert('Order complied');
-                // form.reset()
+                e.form.reset()
             }
-            console.log(data)})
+            })
          .catch(er => console.log(er))
         // if( phone.length == 11){}
     } 
