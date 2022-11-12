@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useEffect } from 'react';
 import { FaFacebookF, FaGofore, FaLinkedinIn } from 'react-icons/fa';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthProvider';
@@ -8,29 +9,36 @@ const Login = () => {
     const navigate = useNavigate()
     const { singInEmailPassword, user, error, setError } = useContext(AuthContext)
     const form = location?.state?.from?.pathname || '/';
+
+    useEffect(()=>{
+        if(user){
+            navigate('/')
+        }
+    },[user?.email])
+
     const handelUserLogin = e => {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
 
+
+
         singInEmailPassword(email, password)
             .then((currentUser) => {
                 // Signed in 
-                const users = currentUser.user.email;
-
+                const current = currentUser.user.email;
                 setError('')
             fetch('http://localhost:5000/jwt', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
                 },
-                body: JSON.stringify(users)
+                body: JSON.stringify({current})
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
                     localStorage.setItem('token', data.token)
-                    navigate(form, { replace: true })
+                    // navigate(form, { replace: true })
                 })
             })
             .catch((error) => {

@@ -23,7 +23,7 @@ const CheckOut = () => {
             product_photo : data?.img,
             price : data?.price,
             customer: fullName,
-            email :'email@ggg.ccc',
+            email,
             phone,
             massage
         }

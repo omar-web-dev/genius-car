@@ -3,12 +3,10 @@ import { AuthContext } from '../../Context/AuthProvider';
 import ServiceCard from './ServiceCard';
 
 const Service = () => {
-    const { user, loading, setLoading } = useContext(AuthContext)
     const [services, setServices] = useState([])
     const [count, setCount] = useState(0)
     const [page, setPage] = useState(1)
-    const [size, setSize] = useState(10)
-    console.log(size, page)
+    const [size, setSize] = useState(9)
 
 
     const pages = Math.ceil(count / size)
@@ -34,16 +32,15 @@ const Service = () => {
             <div className='flex justify-center'>
                 <div className="btn-group mt-5">
                     {
-                        [...Array(pages).keys()].map(nb => <button className="btn" key={nb} onClick={()=> setPage(nb+1)}>{nb + 1}</button>)
+                        [...Array(pages).keys()].map(nb => <button className="btn" key={nb-1} onClick={()=> setPage(nb)}>{nb + 1}</button>)
                     }
                 </div>
                 <select name="" onChange={e => setSize(e.target.value)} className='ml-5 focus:outline-none' id="">
-                    <option value="5">5</option>
-                    <option selected={10} value="10">10</option>
+                    <option value="6">6</option>
+                    <option selected={9} value="9">9</option>
+                    <option value="12">12</option>
                     <option value="15">15</option>
-                    <option value="20">20</option>
                 </select>
-                {/* <button className="btn btn-outline btn-error mt-3 text-white">More Services</button> */}
             </div>
         </div>
     );

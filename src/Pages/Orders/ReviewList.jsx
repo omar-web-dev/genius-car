@@ -25,7 +25,7 @@ const ReviewList = ({ order, handelDelete, handelStatusUpdate }) => {
                     22-10-2022
                 </div>
                 <div className='inline-flex items-center'>
-                    <button onClick={() => handelStatusUpdate(_id)} className="text-xl font-semibold text-gray-100 bg-red-500 px-5 py-3 rounded-lg">{status? status : 'padding'}</button>
+                    <button onClick={() => handelStatusUpdate(_id)} className={`${"text-xl font-semibold text-gray-100  px-5 py-3 rounded-lg"} ${status==='padding'? "bg-red-500": "bg-blue-500"}`}>{status? status : 'padding'}</button>
                 </div>
             </div>
         </div>
